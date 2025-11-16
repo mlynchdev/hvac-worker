@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HVAC/Ventilation One‑Line & Sizing Worksheet — Wood / Fab / CNC</title>
+  <style>
+    :root {
+      --bg: #0b0e12;
+      --panel: #10151c;
+      --ink: #e6edf3;
+      --muted: #9fb0c0;
+      --accent: #4cc3ff;
+      --accent2: #8aff80;
+      --warn: #ffc663;
+      --danger: #ff7a7a;
+      --ok: #7ee787;
+      --grid: rgba(255,255,255,0.06);
+    }
+    html, body { background: var(--bg); color: var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    .wrap { max-width: 1200px; margin: 24px auto 80px; padding: 0 16px; }
+    h1 { font-size: 28px; margin: 0 0 8px; }
+    h2 { font-size: 22px; margin: 24px 0 8px; }
+    h3 { font-size: 18px; margin: 18px 0 8px; color: var(--muted); }
+    .panel { background: var(--panel); border: 1px solid var(--grid); border-radius: 14px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.35); }
+    .grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .note { color: var(--muted); font-size: 13px; }
+    .tag { display:inline-block; border:1px solid var(--grid); border-radius:10px; padding:2px 8px; margin-right:6px; font-size:12px; color: var(--muted); }
+    svg { width: 100%; height: auto; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius: 12px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px 8px; border-bottom: 1px dashed var(--grid); }
+    th { text-align: left; color: var(--muted); font-weight: 600; }
+    .right { text-align: right; }
+    .pill { background: rgba(76,195,255,0.12); color: var(--accent); border: 1px solid rgba(76,195,255,0.35); padding: 2px 8px; border-radius: 999px; font-size: 12px; }
+    .kbd { border:1px solid var(--grid); border-bottom-width:2px; border-radius:8px; padding:2px 6px; background:#111722; }
+    .legend { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+    .legend span{ display:flex; gap:6px; align-items:center; color: var(--muted); font-size:13px; }
+    .legend i { width:18px; height:6px; display:inline-block; border-radius:99px; }
+    .supply { background:#3a946a; }
+    .exhaust { background:#347ac9; }
+    .dust { background:#9f6e26; }
+    .duct { stroke:#2b89ff; }
+    .duct-supply { stroke:#48c78e; }
+    .duct-dust { stroke:#e0a94b; }
+    .device { fill:#141b24; stroke:#32475f; }
+    .label { fill:#cbd8e6; font-size:12px; }
+    .small { font-size:12px; color: var(--muted); }
+    .two-col { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+    .muted { color: var(--muted); }
+    .warn { color: var(--warn); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>HVAC / Ventilation One‑Line & Sizing Worksheet</h1>
+    <div class="note">Project: Three rooms (wood, fabrication, CNC) with two independent zones and shared exterior wall via wood shop. Ceiling height 14 ft.</div>
+
+    <!-- ONE-LINE DIAGRAM -->
+    <h2>One‑Line Diagram</h2>
+    <div class="panel">
+      <div class="legend">
+        <span><i class="supply"></i> Outside Air (Supply)</span>
+        <span><i class="exhaust"></i> Fume/General Exhaust</span>
+        <span><i class="dust"></i> Wood Dust Collection (separate)</span>
+      </div>
+      <svg viewBox="0 0 1100 520" class="mono">
+        <!-- Exterior wall left -->
+        <rect x="10" y="10" width="8" height="500" fill="#374b63"/>
+        <text x="20" y="30" class="label">Exterior Wall</text>
+
+        <!-- Outdoor devices at exterior wall -->
+        <rect x="30" y="60" width="140" height="70" class="device" stroke-width="1.5" />
+        <text x="100" y="100" class="label" text-anchor="middle">Louver‑WOOD</text>
+        <rect x="30" y="160" width="140" height="70" class="device" stroke-width="1.5" />
+        <text x="100" y="200" class="label" text-anchor="middle">Exhaust Fan — Fab/CNC</text>
+        <rect x="30" y="260" width="140" height="70" class="device" stroke-width="1.5" />
+        <text x="100" y="300" class="label" text-anchor="middle">OA-VFD‑Fab/CNC</text>
+        <rect x="30" y="360" width="140" height="70" class="device" stroke-width="1.5" />
+        <text x="100" y="400" class="label" text-anchor="middle">Cyclone DC (Wood)</text>
+
+        <!-- Rooms -->
+        <rect x="230" y="40" width="820" height="120" fill="#0f141c" stroke="#2c3d52"/>
+        <text x="640" y="30" class="label" text-anchor="middle">WOOD SHOP — 350 ft² × 14 ft = 4,900 ft³</text>
+
+        <rect x="230" y="200" width="820" height="120" fill="#0f141c" stroke="#2c3d52"/>
+        <text x="640" y="190" class="label" text-anchor="middle">FAB SHOP — 246 ft² × 14 ft = 3,444 ft³</text>
+
+        <rect x="230" y="360" width="820" height="120" fill="#0f141c" stroke="#2c3d52"/>
+        <text x="640" y="350" class="label" text-anchor="middle">CNC ROOM — 319 ft² × 14 ft = 4,466 ft³</text>
+
+        <!-- Supply to Wood from MAU-WOOD -->
+        <path d="M170 95 L220 95" stroke="#48c78e" stroke-width="4" class="duct-supply"/>
+        <circle cx="195" cy="95" r="3" fill="#48c78e" />
+        <text x="190" y="85" class="label" text-anchor="end">OA ≈ 2,650–2,950 CFM</text>
+
+        <!-- Wood general exhaust register to exterior fan? Wood process dust separate -->
+        <path d="M260 70 L260 20 L170 20 L170 195" stroke="#347ac9" stroke-width="3" class="duct"/>
+        <text x="260" y="65" class="label">Gen. EXH ~820 CFM</text>
+
+        <!-- Wood dust collection trunk to Cyclone DC -->
+        <path d="M450 140 L450 395 L170 395" stroke="#e0a94b" stroke-width="6" class="duct-dust"/>
+        <text x="460" y="150" class="label">Wood DC Main ~2,100 CFM (3,500–4,000 fpm)</text>
+
+        <!-- Fab/CNC Exhaust branches to shared EF -->
+        <path d="M170 195 L220 195 L220 220 L230 220" stroke="#347ac9" stroke-width="4" class="duct"/>
+        <text x="230" y="215" class="label">Fab Exhaust ~1,500 CFM</text>
+        <path d="M170 195 L220 195 L220 380 L230 380" stroke="#347ac9" stroke-width="4" class="duct"/>
+        <text x="230" y="375" class="label">CNC Exhaust ~1,170 CFM</text>
+
+        <!-- Fab/CNC OA branches from MAU-Fab/CNC -->
+        <path d="M170 295 L210 295 L210 260 L230 260" stroke="#48c78e" stroke-width="4" class="duct-supply"/>
+        <text x="235" y="255" class="label">Fab OA ~1,350–1,425</text>
+        <path d="M170 295 L210 295 L210 420 L230 420" stroke="#48c78e" stroke-width="4" class="duct-supply"/>
+        <text x="235" y="415" class="label">CNC OA ~1,050–1,110</text>
+
+        <!-- Process devices/hoods (icons) -->
+        <rect x="760" y="70" width="120" height="40" class="device"/><text x="820" y="95" class="label" text-anchor="middle">Planer/JP Drop</text>
+        <rect x="620" y="70" width="120" height="40" class="device"/><text x="680" y="95" class="label" text-anchor="middle">Table Saw Drop</text>
+        <rect x="500" y="220" width="120" height="40" class="device"/><text x="560" y="245" class="label" text-anchor="middle">Weld Arm</text>
+        <rect x="660" y="220" width="120" height="40" class="device"/><text x="720" y="245" class="label" text-anchor="middle">Grinder Hood</text>
+        <rect x="520" y="380" width="150" height="40" class="device"/><text x="595" y="405" class="label" text-anchor="middle">CNC Mist Collector</text>
+
+        <!-- Negative pressure callouts -->
+        <text x="980" y="110" class="label">Wood: −0.02 to −0.05 in. w.g.</text>
+        <text x="980" y="270" class="label">Fab: slightly negative vs CNC</text>
+        <text x="980" y="430" class="label">CNC: neutral to slight negative</text>
+      </svg>
+      <div class="small">Notes: Wood dust system remains physically and functionally separate from metal/CNC exhaust. Use backdraft + fire/smoke dampers on branch penetrations. OA tracks total exhaust at ~90–95% to maintain negative pressure.</div>
+    </div>
+
+    <!-- WORKSHEET -->
+    <h2>Sizing Worksheet (pre‑filled with current assumptions)</h2>
+    <div class="grid">
+      <div class="panel">
+        <h3>Room Data</h3>
+        <table>
+          <thead>
+            <tr><th>Space</th><th>Area (ft²)</th><th>Height (ft)</th><th>Volume (ft³)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Wood Shop</td><td>350</td><td>14</td><td class="right">4,900</td></tr>
+            <tr><td>Fab Shop</td><td>246</td><td>14</td><td class="right">3,444</td></tr>
+            <tr><td>CNC Room</td><td>319</td><td>14</td><td class="right">4,466</td></tr>
+          </tbody>
+        </table>
+        <div class="small">CFM = Volume × ACH ÷ 60</div>
+        <h3>Baseline (General) Ventilation Targets</h3>
+        <table>
+          <thead>
+            <tr><th>Space</th><th>ACH</th><th>Baseline Exhaust (CFM)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Wood</td><td>10 ACH</td><td class="right">≈ 820</td></tr>
+            <tr><td>Fab</td><td>10 ACH</td><td class="right">≈ 575–600</td></tr>
+            <tr><td>CNC</td><td>9 ACH</td><td class="right">≈ 670</td></tr>
+          </tbody>
+        </table>
+        <h3>Process (Local) Exhaust</h3>
+        <table>
+          <thead>
+            <tr><th>Process</th><th>Qty (active)</th><th>CFM each</th><th>Total CFM</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Wood Dust Collector</td><td class="right">1</td><td class="right">≈ 2,100</td><td class="right">≈ 2,100</td></tr>
+            <tr><td>Welding Extraction Arm</td><td class="right">1</td><td class="right">≈ 900</td><td class="right">≈ 900</td></tr>
+            <tr><td>Grinding Hood</td><td class="right">(alt)</td><td class="right">≈ 600</td><td class="right">—</td></tr>
+            <tr><td>CNC Mist Collector</td><td class="right">1</td><td class="right">≈ 500</td><td class="right">≈ 500</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <h3>Room Totals & OA Tracking</h3>
+        <table>
+          <thead>
+            <tr><th>Space</th><th>Baseline CFM</th><th>Process CFM</th><th>Design Exhaust</th><th>Supply OA (90–95%)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Wood</td><td class="right">~820</td><td class="right">~2,100</td><td class="right"><b>~2,920</b></td><td class="right">~2,630–2,774</td></tr>
+            <tr><td>Fab</td><td class="right">~600</td><td class="right">~900</td><td class="right"><b>~1,500</b></td><td class="right">~1,350–1,425</td></tr>
+            <tr><td>CNC</td><td class="right">~670</td><td class="right">~500</td><td class="right"><b>~1,170</b></td><td class="right">~1,050–1,110</td></tr>
+          </tbody>
+        </table>
+        <div class="small">Adjust process CFM for simultaneous use diversity. If Fab runs arm + grinder concurrently, set Fab design exhaust closer to 2,000 CFM and scale OA accordingly.</div>
+        <h3>Duct Rough‑Sizing (Guideline)</h3>
+        <table>
+          <thead>
+            <tr><th>Run</th><th>Design CFM</th><th>Velocity (fpm)</th><th>Suggested D (round)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Fab Exhaust Branch</td><td class="right">1,500</td><td class="right">1,500</td><td class="right">≈ 14"</td></tr>
+            <tr><td>CNC Exhaust Branch</td><td class="right">1,170</td><td class="right">1,500</td><td class="right">≈ 12"</td></tr>
+            <tr><td>Combined Fab+CNC Manifold</td><td class="right">2,670</td><td class="right">1,500</td><td class="right">≈ 18"</td></tr>
+            <tr><td>Wood Dust Main (separate)</td><td class="right">2,100</td><td class="right">3,500–4,000</td><td class="right">≈ 10–12"</td></tr>
+            <tr><td>Wood OA Main</td><td class="right">2,700</td><td class="right">1,000</td><td class="right">≈ 22"</td></tr>
+            <tr><td>Fab OA Branch</td><td class="right">1,400</td><td class="right">900</td><td class="right">≈ 17"</td></tr>
+            <tr><td>CNC OA Branch</td><td class="right">1,100</td><td class="right">900</td><td class="right">≈ 15"</td></tr>
+          </tbody>
+        </table>
+        <div class="small">Diameter (ft) ≈ √( 4 × CFM / (π × Velocity) ); convert to inches × 12. Final sizes depend on ESP, fittings, and acoustic constraints.</div>
+      </div>
+    </div>
+
+    <!-- CONTROLS / I-O LIST -->
+    <h2>Controls & I/O Map</h2>
+    <div class="panel">
+      <div class="two-col">
+        <div>
+          <h3>Sensors</h3>
+          <ul>
+            <li>Room DP sensors (Wood, Fab, CNC) → setpoints: Wood −0.02..−0.05 in. w.g.; Fab slightly negative vs CNC; CNC slight negative.</li>
+            <li>Airflow proving switches on exhaust fans and OA-intake.</li>
+            <li>Current/auxiliary contacts from: dust collector, weld arm fan, grinder hood, CNC mist collector.</li>
+            <li>filter ΔP (all units), fire/smoke damper position.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Actuators</h3>
+          <ul>
+            <li>VFDs: Wood Louver, Fab/CNC VFD, Fab Exhaust Fan, CNC Exhaust Fan (or one shared exhaust VFD).</li>
+            <li>Motorized OA balancing dampers for Fab & CNC branches.</li>
+            <li>Automatic blast gates on wood dust drops (interlocked with tools).</li>
+            <li>Backdraft dampers on each exhaust branch; fire/smoke dampers on barrier penetrations.</li>
+          </ul>
+        </div>
+      </div>
+      <h3>Sequences (summary)</h3>
+      <ol>
+        <li><b>Room pressure tracking:</b> Each space holds its DP setpoint by modulating supply OA (primary) and exhaust VFD (secondary).</li>
+        <li><b>Process tracking:</b> When a local source turns on (e.g., weld arm switch closes), its room exhaust VFD ramps to its profile; OA tracks to 90–95% of total exhaust.</li>
+        <li><b>Wood dust:</b> Dust collector enables via interlock; auto blast gates open with the tool; wood Louver tracks collector flow to maintain negative pressure.</li>
+        <li><b>Safeties:</b> Loss of exhaust → shed OA; damper closure proves before fan start where required; alarm on high filter ΔP.</li>
+      </ol>
+    </div>
+	<!-- CONTROLS / I-O LIST -->
+
+	<table border="1" cellpadding="6" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Approx. Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://www.northerntool.com/products/canarm-sisdd-ec-filtered-fresh-air-supply-unit-air-delivery-2500-cfm-outdoor-rated-model-sis10dd100ec-4419386?utm_source=chatgpt.com" target="_blank">Canarm SISDD-EC Filtered Fresh Air Supply Unit (~2,500 CFM)</a></td>
+      <td>Outdoor-rated filtered supply air unit; ~2,500 CFM capacity; ideal for combined OA to Fab + CNC rooms.</td>
+      <td>≈ US $1,200-1,400</td>
+    </tr>
+    <tr>
+      <td><a href="https://store.ventilationdirect.com/centrifugal-upblast-exhaust-fan-2500-cfm?utm_source=chatgpt.com" target="_blank">Premium Direct-Drive Upblast Exhaust Fan (~2,500 CFM)</a></td>
+      <td>Roof-mount upblast centrifugal exhaust fan; direct drive; ECM motor; suitable for ~2,500 CFM exhaust service.</td>
+      <td>≈ US $1,049</td>
+    </tr>
+    <tr>
+      <td><a href="https://hoodmart.com/belt-drive-centrifugal-upblast-hurricane-exhaust-fan-3000-cfm-1339-rpm-1ph.html?srsltid=AfmBOoqjtgeVENR8Bu6wdqbUZKP4fj1rUYGgLX7FQjLX133" target="_blank">Belt-Drive Centrifugal Upblast Exhaust Fan (~3,000 CFM)</a></td>
+      <td>High-capacity belt-drive upblast exhaust fan; good headroom for future expansion or long duct runs.</td>
+      <td>≈ US $2,300-2,400</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.northerntool.com/products/j-d-mfg-wallmaster-exhaust-fan-36in-dia-517502-cfm-4-wing-blade-model-vf36gg-517502?utm_source=chatgpt.com" target="_blank">J&D WallMaster Exhaust Fan 36″ (~5,000+ CFM)</a></td>
+      <td>Wall-/duct-mounted high volume exhaust fan; useful for combined Fab + CNC manifold with future capacity.</td>
+      <td>≈ US $1,079</td>
+    </tr>
+    <tr>
+      <td><a href="https://industrialfansdirect.com/afk-flange-mounted-fan-16-inch-3000-cfm-3-phase-direct-drive-supply?utm_source=chatgpt.com" target="_blank">AFK Flange-Mounted Supply Fan 16″ (~3,000 CFM)</a></td>
+      <td>Flange-mounted supply fan, ~3,000 CFM; good alternate for supply-air branch or higher head situation.</td>
+      <td>≈ US $1,886</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.lowes.com/pd/VEVOR-Multi-tool/5015747763?user=shopping&feed=yes&srsltid=AfmBOoporb4HR0jNxfBt1fH9s1eADjrxW7S8U3jU&locale=en-US" target="_blank">VEVOR 10HP / 7.5 kW Variable Frequency Drive (VFD)</a></td>
+      <td>Heavy-duty VFD unit for controlling fan motor speed (e.g., exhaust or OA fan). Enables modulated control for pressure/flow tracking.</td>
+      <td>≈ US $160-200</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.greenheck.com/shop/dampers/remote-balancing-dampers/rbdr50-6?srsltid=AfmBOorp1Lqc1HWnva9YHUGgWsAQJGz" target="_blank">Greenheck RBDR-50 Remote Balancing Damper</a></td>
+      <td>Round duct balancing damper with remote actuator; used to balance branch flows (Fab and CNC splits).</td>
+      <td>≈ US $161</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.grainger.com/product/2TFX8?gucid=N:N:FPL:Free:GGL:CSM-1946:tew63h3:20501231" target="_blank">Dayton Round Balancing Damper 2TFX-8</a></td>
+      <td>Manual balancing damper for round duct; economical choice for branch duct balancing.</td>
+      <td>≈ US $98.50</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.lowes.com/pd/VEVOR-Multi-tool/5015747767?user=shopping&feed=yes&srsltid=AfmBOopS2pMLMbV0jNvy5VXxWWqAWEdOCs4Yxg" target="_blank">VEVOR 7.5 kW Variable Frequency Drive (VFD) 10HP</a></td>
+      <td>An alternate 10 HP VFD option; similar purpose for fan controls but from different vendor.</td>
+      <td>≈ US $197</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.grainger.com/product/22CV78?gucid=N:N:FPL:Free:GGL:CSM-1946:tew63h3:20501231" target="_blank">Dayton Square Balancing Damper 22CV78</a></td>
+      <td>Square/rectangular balancing damper option for non-round duct runs or special branch geometries.</td>
+      <td>≈ US $49.99</td>
+    </tr>
+  </tbody>
+</table>
+
+    <!-- CHECKLIST -->
+    <h2>Field/Design Checklist</h2>
+    <div class="panel">
+      <ul>
+        <li>Confirm simultaneous‑use diversity (Fab: arm + grinder? CNC: number of mist collectors?).
+        <li>Layout duct paths from exterior wall; include long‑radius elbows, cleanouts, test ports.</li>
+        <li>Confirm outdoor placement clearances for cyclone DC, Louver and VFD; verify local code/NFPA compliance.</li>
+        <li>Select silencers/liners as needed (check coolant/mist oil compatibility).</li>
+        <li>Commissioning plan: balance OA/EXH, tune DP setpoints, verify interlocks.</li>
+      </ul>
+      <div class="note">Edit numbers in the tables as you finalize equipment selections and diversity. This sheet is intended as a living schematic + calc scratchpad.</div>
+    </div>
+  </div>
+</body>
+</html>
+
