@@ -49,10 +49,21 @@
     .two-col { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
     .muted { color: var(--muted); }
     .warn { color: var(--warn); }
+    nav { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--grid); }
+    nav a { color: var(--muted); text-decoration: none; padding: 4px 12px; margin-right: 8px; font-size: 14px; border-radius: 6px; transition: all 0.2s; }
+    nav a:hover { background: rgba(76,195,255,0.1); color: var(--accent); }
+    nav a.active { color: var(--accent); background: rgba(76,195,255,0.08); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <div class="wrap">
+    <nav>
+      <a href="/" class="active">HVAC Worksheet</a>
+      <a href="/hrv.html">HRV Build Guide</a>
+    </nav>
+
     <h1>HVAC / Ventilation One‑Line & Sizing Worksheet</h1>
     <div class="note">Project: Three rooms (wood, fabrication, CNC) with two independent zones and shared exterior wall via wood shop. Ceiling height 14 ft.</div>
 
@@ -64,7 +75,7 @@
         <span><i class="exhaust"></i> Fume/General Exhaust</span>
         <span><i class="dust"></i> Wood Dust Collection (separate)</span>
       </div>
-      <svg viewBox="0 0 1100 520" class="mono">
+      <svg viewBox="0 0 1350 520" class="mono">
         <!-- Exterior wall left -->
         <rect x="10" y="10" width="8" height="500" fill="#374b63"/>
         <text x="20" y="30" class="label">Exterior Wall</text>
@@ -249,11 +260,6 @@
       <td>≈ US $1,200-1,400</td>
     </tr>
     <tr>
-      <td><a href="https://store.ventilationdirect.com/centrifugal-upblast-exhaust-fan-2500-cfm?utm_source=chatgpt.com" target="_blank">Premium Direct-Drive Upblast Exhaust Fan (~2,500 CFM)</a></td>
-      <td>Roof-mount upblast centrifugal exhaust fan; direct drive; ECM motor; suitable for ~2,500 CFM exhaust service.</td>
-      <td>≈ US $1,049</td>
-    </tr>
-    <tr>
       <td><a href="https://hoodmart.com/belt-drive-centrifugal-upblast-hurricane-exhaust-fan-3000-cfm-1339-rpm-1ph.html?srsltid=AfmBOoqjtgeVENR8Bu6wdqbUZKP4fj1rUYGgLX7FQjLX133" target="_blank">Belt-Drive Centrifugal Upblast Exhaust Fan (~3,000 CFM)</a></td>
       <td>High-capacity belt-drive upblast exhaust fan; good headroom for future expansion or long duct runs.</td>
       <td>≈ US $2,300-2,400</td>
@@ -307,6 +313,17 @@
         <li>Commissioning plan: balance OA/EXH, tune DP setpoints, verify interlocks.</li>
       </ul>
       <div class="note">Edit numbers in the tables as you finalize equipment selections and diversity. This sheet is intended as a living schematic + calc scratchpad.</div>
+    </div>
+
+    <!-- RELATED RESOURCES -->
+    <h2>Related Resources</h2>
+    <div class="panel">
+      <a href="/hrv.html" style="text-decoration: none; color: inherit; display: block;">
+        <div style="padding: 12px; border-radius: 10px; border: 1px solid var(--grid); background: linear-gradient(135deg, rgba(76,195,255,0.05), rgba(138,255,128,0.05));">
+          <h3 style="margin-top: 0; color: var(--accent);">DIY Heat Recovery Ventilator (HRV) Build Guide →</h3>
+          <p class="note" style="margin-bottom: 0;">Complete instructions for building an aluminum plate cross-flow HRV system for energy-efficient ventilation. Includes materials list, pricing, and step-by-step assembly guide.</p>
+        </div>
+      </a>
     </div>
   </div>
 </body>
