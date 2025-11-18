@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Complete guide to building a DIY aluminum plate cross-flow heat recovery ventilator (HRV) with materials list, pricing, and step-by-step instructions." />
+  <title>DIY Heat Recovery Ventilator (HRV) Build Guide</title>
+  <style>
+    :root {
+      --bg: #0b0e12;
+      --panel: #10151c;
+      --ink: #e6edf3;
+      --muted: #9fb0c0;
+      --accent: #4cc3ff;
+      --accent2: #8aff80;
+      --warn: #ffc663;
+      --danger: #ff7a7a;
+      --ok: #7ee787;
+      --grid: rgba(255,255,255,0.06);
+    }
+    html, body { background: var(--bg); color: var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    .wrap { max-width: 1200px; margin: 24px auto 80px; padding: 0 16px; }
+    h1 { font-size: 28px; margin: 0 0 8px; }
+    h2 { font-size: 22px; margin: 24px 0 8px; }
+    h3 { font-size: 18px; margin: 18px 0 8px; color: var(--muted); }
+    .panel { background: var(--panel); border: 1px solid var(--grid); border-radius: 14px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.35); }
+    .grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .note { color: var(--muted); font-size: 13px; }
+    .tag { display:inline-block; border:1px solid var(--grid); border-radius:10px; padding:2px 8px; margin-right:6px; font-size:12px; color: var(--muted); }
+    svg { width: 100%; height: auto; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius: 12px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px 8px; border-bottom: 1px dashed var(--grid); }
+    th { text-align: left; color: var(--muted); font-weight: 600; }
+    .right { text-align: right; }
+    .pill { background: rgba(76,195,255,0.12); color: var(--accent); border: 1px solid rgba(76,195,255,0.35); padding: 2px 8px; border-radius: 999px; font-size: 12px; }
+    .kbd { border:1px solid var(--grid); border-bottom-width:2px; border-radius:8px; padding:2px 6px; background:#111722; }
+    .legend { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+    .legend span{ display:flex; gap:6px; align-items:center; color: var(--muted); font-size:13px; }
+    .legend i { width:18px; height:6px; display:inline-block; border-radius:99px; }
+    .supply { background:#3a946a; }
+    .exhaust { background:#347ac9; }
+    .dust { background:#9f6e26; }
+    .duct { stroke:#2b89ff; }
+    .duct-supply { stroke:#48c78e; }
+    .duct-dust { stroke:#e0a94b; }
+    .device { fill:#141b24; stroke:#32475f; }
+    .label { fill:#cbd8e6; font-size:12px; }
+    .small { font-size:12px; color: var(--muted); }
+    .two-col { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+    .muted { color: var(--muted); }
+    .warn { color: var(--warn); }
+    nav { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--grid); }
+    nav a { color: var(--muted); text-decoration: none; padding: 4px 12px; margin-right: 8px; font-size: 14px; border-radius: 6px; transition: all 0.2s; }
+    nav a:hover { background: rgba(76,195,255,0.1); color: var(--accent); }
+    nav a.active { color: var(--accent); background: rgba(76,195,255,0.08); }
+    .step { background: rgba(76,195,255,0.05); border-left: 3px solid var(--accent); padding: 12px 16px; margin: 12px 0; border-radius: 6px; }
+    .warning { background: rgba(255,198,99,0.08); border-left: 3px solid var(--warn); padding: 12px 16px; margin: 12px 0; border-radius: 6px; }
+    .spec-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    @media (max-width: 768px) { .spec-grid { grid-template-columns: 1fr; } }
+    .spec-card { background: var(--panel); border: 1px solid var(--grid); border-radius: 10px; padding: 16px; text-align: center; }
+    .spec-value { font-size: 24px; font-weight: 700; color: var(--accent); margin: 8px 0; }
+    .spec-label { font-size: 13px; color: var(--muted); }
+    ul { line-height: 1.8; }
+    li { margin-bottom: 4px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .price { color: var(--accent2); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <a href="/">HVAC Worksheet</a>
+      <a href="/hrv.html" class="active">HRV Build Guide</a>
+    </nav>
+
+    <h1>DIY Heat Recovery Ventilator (HRV) Build Guide</h1>
+    <div class="note">Aluminum plate cross-flow heat recovery ventilator for residential ventilation with energy recovery. Budget-minded design with 60-75% sensible effectiveness.</div>
+
+    <!-- OVERVIEW -->
+    <h2>Overview</h2>
+    <div class="panel">
+      <p>Build a 24″ × 24″ × 10–12″ cross-flow plate core from thin aluminum sheets separated by 1/8″ spacer strips to form alternating channels. Aluminum's thermal conductivity (~190–230 W/m·K) is orders of magnitude higher than plastics (~0.16–0.20 W/m·K for polycarbonate), which reduces wall resistance and typically bumps sensible effectiveness into the upper end of the common cross-flow range (60–75%) when pressure drop is kept low.</p>
+
+      <div class="spec-grid">
+        <div class="spec-card">
+          <div class="spec-label">Heat Recovery</div>
+          <div class="spec-value">60-75%</div>
+          <div class="spec-label">Sensible Effectiveness</div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-label">Target Airflow</div>
+          <div class="spec-value">600-1200</div>
+          <div class="spec-label">CFM per stream</div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-label">Face Velocity</div>
+          <div class="spec-value">150-300 fpm</div>
+          <div class="spec-label">Adjustable via fan speed</div>
+        </div>
+      </div>
+
+      <h3>Key Benefits</h3>
+      <ul>
+        <li><strong>High thermal conductivity:</strong> Aluminum plates conduct ~200× better than polymer plates</li>
+        <li><strong>Cost-effective:</strong> Total budget $1,365–$1,625 for complete system</li>
+        <li><strong>Simple construction:</strong> Stackable plate design with foam tape spacers</li>
+        <li><strong>Quiet operation:</strong> Low face velocities minimize pressure drop and noise</li>
+      </ul>
+    </div>
+
+    <!-- VIDEO TUTORIAL -->
+    <h2>Video Tutorial: Alternative Corrugated Plastic Design</h2>
+    <div class="panel">
+      <p>For a simpler, lower-cost alternative using corrugated plastic sheets instead of aluminum, check out this excellent DIY build video:</p>
+
+      <div style="margin: 16px 0; padding: 16px; background: rgba(76,195,255,0.05); border-left: 3px solid var(--accent); border-radius: 8px;">
+        <h3 style="margin-top: 0;">DIY Heat Recovery Ventilator (Coroplast Design)</h3>
+        <p><a href="https://www.youtube.com/watch?v=w5sR-0oX1dg" target="_blank" style="font-weight: 600;">Watch on YouTube →</a></p>
+
+        <div class="spec-grid" style="margin: 16px 0;">
+          <div class="spec-card">
+            <div class="spec-label">Efficiency</div>
+            <div class="spec-value">~60%</div>
+            <div class="spec-label">Actual measured</div>
+          </div>
+          <div class="spec-card">
+            <div class="spec-label">Total Cost</div>
+            <div class="spec-value">&lt;$300</div>
+            <div class="spec-label">Materials only</div>
+          </div>
+          <div class="spec-card">
+            <div class="spec-label">Filter Rating</div>
+            <div class="spec-value">MERV-13</div>
+            <div class="spec-label">4" thick filters</div>
+          </div>
+        </div>
+
+        <p class="note">This corrugated plastic design offers excellent value at under $300. The builder achieved 60% efficiency using readily-available materials and simple construction. Great indoor air quality improvements with significant VOC and CO2 reduction.</p>
+
+        <h3>Video Chapters</h3>
+        <ul style="margin-bottom: 0;">
+          <li><strong>0:00</strong> - Introduction</li>
+          <li><strong>0:32</strong> - What HRVs do</li>
+          <li><strong>1:18</strong> - Drawbacks of other DIY HRVs</li>
+          <li><strong>2:58</strong> - The build reveal</li>
+          <li><strong>5:12</strong> - Performance data</li>
+          <li><strong>7:25</strong> - Cost breakdown</li>
+          <li><strong>7:50</strong> - Design drawbacks</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <strong>Comparison:</strong> The corrugated plastic design (~$300, 60% efficiency) is ideal for budget-conscious builders, while the aluminum plate design shown below (~$1,646, 60-75% efficiency) offers potentially higher performance and durability with higher upfront cost.
+      </div>
+    </div>
+
+    <!-- CORE SPECIFICATIONS -->
+    <h2>Core Specifications</h2>
+    <div class="panel">
+      <h3>Design Parameters</h3>
+      <table>
+        <thead>
+          <tr><th>Parameter</th><th>Specification</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Core dimensions</td><td class="right">24″ × 24″ × 10–12″</td></tr>
+          <tr><td>Plate material</td><td class="right">0.018″ aluminum trim coil</td></tr>
+          <tr><td>Channel height</td><td class="right">1/8″ (3.2mm)</td></tr>
+          <tr><td>Number of plates</td><td class="right">90–100 plates</td></tr>
+          <tr><td>Face area</td><td class="right">4 ft² (576 in²)</td></tr>
+          <tr><td>Air pathing</td><td class="right">Cross-flow (90° crossing)</td></tr>
+          <tr><td>Operating temperature</td><td class="right">-20°F to 100°F</td></tr>
+        </tbody>
+      </table>
+
+      <div class="note">
+        <strong>Air Pathing:</strong> Adjacent channels are sealed on opposite edges, forcing supply and exhaust to cross at 90°. This cross-flow configuration provides good efficiency with simple construction.
+      </div>
+    </div>
+
+    <!-- MATERIALS & PRICING -->
+    <h2>Materials & Components</h2>
+    <div class="panel">
+      <h3>Fans & Control System</h3>
+      <table>
+        <thead>
+          <tr><th>Component</th><th>Description</th><th>Qty</th><th>Unit Price</th><th>Total</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="https://www.ato.com/ac-backward-curved-centrifugal-fan" target="_blank">ATO EC Backward-Curved Fan</a></td>
+            <td>280mm, 1200 CFM, 280W, Model: ATO-BCCF-EC280</td>
+            <td class="right">2</td>
+            <td class="right price">$307.39</td>
+            <td class="right price">$614.78</td>
+          </tr>
+          <tr>
+            <td>0–10V Speed Controller</td>
+            <td>LED dimmer style control knob</td>
+            <td class="right">1</td>
+            <td class="right">$3–15</td>
+            <td class="right">$15.00</td>
+          </tr>
+          <tr>
+            <td>24 VDC Power Supply</td>
+            <td>0.8–1A wall adapter</td>
+            <td class="right">1</td>
+            <td class="right">$9–14</td>
+            <td class="right">$14.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Heat Exchanger Core Materials</h3>
+      <table>
+        <thead>
+          <tr><th>Component</th><th>Description</th><th>Qty</th><th>Unit Price</th><th>Total</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Aluminum Trim Coil</td>
+            <td>0.018″ thick, 24″×50′ (Amerimax) - yields ~25 plates per roll</td>
+            <td class="right">4 rolls</td>
+            <td class="right price">$167.28</td>
+            <td class="right price">$669.12</td>
+          </tr>
+          <tr>
+            <td>Spacer Tape</td>
+            <td>1/8″ × 3/4″ single-sided neoprene/EPDM foam tape</td>
+            <td class="right">3 rolls</td>
+            <td class="right">$20.00</td>
+            <td class="right">$60.00</td>
+          </tr>
+          <tr>
+            <td>UL-181 Foil Tape</td>
+            <td>2.5″ × 60 yd aluminum HVAC tape</td>
+            <td class="right">2 rolls</td>
+            <td class="right">$26.00</td>
+            <td class="right">$52.00</td>
+          </tr>
+          <tr>
+            <td>Aluminum Angle</td>
+            <td>3/4″×3/4″×1/8″ for compression frame (8-ft sticks)</td>
+            <td class="right">2</td>
+            <td class="right">$22.00</td>
+            <td class="right">$44.00</td>
+          </tr>
+          <tr>
+            <td>GE Silicone II</td>
+            <td>Clear, 10.1 oz tubes for sealing</td>
+            <td class="right">3</td>
+            <td class="right">$9.86</td>
+            <td class="right">$29.58</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Filters & Ductwork</h3>
+      <table>
+        <thead>
+          <tr><th>Component</th><th>Description</th><th>Qty</th><th>Unit Price</th><th>Total</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>MERV-13 Filters</td>
+            <td>20×20×2 (4-pack)</td>
+            <td class="right">1 pack</td>
+            <td class="right">$60.00</td>
+            <td class="right">$60.00</td>
+          </tr>
+          <tr>
+            <td>Backdraft Dampers</td>
+            <td>10″ diameter for OA and EA</td>
+            <td class="right">2</td>
+            <td class="right">$44.00</td>
+            <td class="right">$88.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="warning">
+        <strong>Budget Total:</strong> Approximately <span class="price">$1,646.48</span> for complete system before long duct runs. Prices shown are estimates and may vary based on supplier and location.
+      </div>
+    </div>
+
+    <!-- BUILD INSTRUCTIONS -->
+    <h2>Build Instructions</h2>
+    <div class="grid">
+      <div class="panel">
+        <h3>1. Cabinet Construction</h3>
+        <div class="step">
+          Build a 26″×26″×16″ box from 1″ foil-faced polyiso insulation board. Seal all seams with foil tape.
+        </div>
+        <ul>
+          <li>Cut four round ports (10–12″ diameter):
+            <ul>
+              <li>OA-IN & SA-OUT on one diagonal</li>
+              <li>RA-IN & EA-OUT on opposite diagonal</li>
+            </ul>
+          </li>
+          <li>Install access panel for maintenance</li>
+          <li>Add drain pan provisions at bottom</li>
+        </ul>
+
+        <h3>2. Plate Preparation</h3>
+        <div class="step">
+          From aluminum rolls, shear 90–100 plates to 24″×24″. Square and deburr all edges, then clean with alcohol.
+        </div>
+        <ul>
+          <li>4 rolls yield ~100 plates (12″ stack)</li>
+          <li>3 rolls yield ~75 plates (9″ stack)</li>
+          <li>Ensure all plates are identical size</li>
+          <li>Remove any protective film</li>
+        </ul>
+
+        <h3>3. Spacer Application</h3>
+        <div class="step">
+          Apply 1/8″ foam tape along two adjacent edges of each plate in alternating pattern.
+        </div>
+        <ul>
+          <li><strong>Odd plates:</strong> Tape north & west edges</li>
+          <li><strong>Even plates:</strong> Tape south & east edges</li>
+          <li>This creates sealed manifolds for crossing airstreams</li>
+          <li>Press tape firmly for good adhesion</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3>4. Core Assembly</h3>
+        <div class="step">
+          Stack plates to target thickness (9–12″). Keep corners perfectly flush throughout assembly.
+        </div>
+        <ul>
+          <li>Check alignment every 10 plates</li>
+          <li>Apply light, even pressure while stacking</li>
+          <li>Install aluminum angle frame around perimeter</li>
+          <li>Add threaded rod through-bolts at corners</li>
+          <li>Tighten just enough to compress gaskets</li>
+        </ul>
+
+        <h3>5. Edge Sealing</h3>
+        <div class="step">
+          Seal all four vertical edges with continuous foil tape bands to prevent crossover leakage.
+        </div>
+        <ul>
+          <li>Apply foil tape in overlapping layers</li>
+          <li>Run silicone bead at all corners</li>
+          <li>Seal any gaps around frame</li>
+          <li>Allow silicone to cure 24 hours</li>
+        </ul>
+
+        <h3>6. Drainage Setup</h3>
+        <div class="step">
+          Pitch cabinet 1–2% toward exhaust-leaving corner. Install shallow aluminum pan with drain.
+        </div>
+        <ul>
+          <li>Condensate forms on cold side in winter</li>
+          <li>Connect drain to appropriate discharge</li>
+          <li>Test drain flow before final installation</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FAN & CONTROL INSTALLATION -->
+    <h2>Fan & Control Installation</h2>
+    <div class="panel">
+      <h3>Fan Mounting</h3>
+      <ul>
+        <li>Mount each <a href="https://www.ato.com/ac-backward-curved-centrifugal-fan" target="_blank">ATO EC 280mm fan</a> to sheet-metal transition plenums</li>
+        <li>Transition from fan outlet to 10–12″ round duct</li>
+        <li>Use vibration isolators to minimize noise transmission</li>
+        <li>Ensure proper clearance for fan inlet</li>
+      </ul>
+
+      <h3>Control Wiring</h3>
+      <ul>
+        <li>Connect both fans' 0–10V control wires to single speed control knob</li>
+        <li>Power control circuit with 24 VDC adapter</li>
+        <li>This ensures balanced supply and exhaust flows</li>
+        <li>Optional: Add separate controls for independent adjustment</li>
+      </ul>
+
+      <h3>Filter Installation</h3>
+      <ul>
+        <li>Install 20×20×2 MERV-13 filters on both OA and RA intakes</li>
+        <li>Build simple gasketed frames upstream of core</li>
+        <li>Ensure easy access for filter changes</li>
+        <li>Label filter direction and change schedule</li>
+      </ul>
+
+      <div class="warning">
+        <strong>Important:</strong> Install backdraft dampers in OA intake and EA discharge ducts to prevent reverse flow when system is off.
+      </div>
+    </div>
+
+    <!-- COMMISSIONING -->
+    <h2>Commissioning & Operation</h2>
+    <div class="panel">
+      <h3>Initial Setup</h3>
+      <ol>
+        <li><strong>Flow Balancing:</strong> Adjust both EC fans with 0–10V control to achieve equal OA and EA flows</li>
+        <li><strong>Verification:</strong> Use pitot tube + manometer or hot-wire anemometer at grilles</li>
+        <li><strong>Target Flows:</strong> 550–650 CFM per stream at moderate fan speed</li>
+        <li><strong>Pressure Check:</strong> Verify slight negative pressure in exhaust stream</li>
+      </ol>
+
+      <h3>Maintenance Schedule</h3>
+      <table>
+        <thead>
+          <tr><th>Task</th><th>Frequency</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Check filters</td><td>Monthly</td><td>Replace when ΔP exceeds 0.3–0.4 in.w.g.</td></tr>
+          <tr><td>Drain inspection</td><td>Quarterly</td><td>Clear any blockages, check flow</td></tr>
+          <tr><td>Core cleaning</td><td>Annually</td><td>Vacuum accessible surfaces, check for damage</td></tr>
+          <tr><td>Fan inspection</td><td>Annually</td><td>Check bearings, clean blades if needed</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Frost Control</h3>
+      <p>If ice forms on core below 20–25°F outdoor temperature:</p>
+      <ul>
+        <li>Reduce or temporarily stop OA fan</li>
+        <li>Consider adding timed defrost relay</li>
+        <li>Install preheater for extreme climates</li>
+        <li>Monitor drain for freeze-ups</li>
+      </ul>
+    </div>
+
+    <!-- PERFORMANCE EXPECTATIONS -->
+    <h2>Performance Expectations</h2>
+    <div class="panel">
+      <h3>Efficiency Characteristics</h3>
+      <ul>
+        <li><strong>Sensible Effectiveness:</strong> 65–75% typical for well-built aluminum cross-flow cores</li>
+        <li><strong>Pressure Drop:</strong> 0.2–0.4 in.w.g. at design flow (including filters)</li>
+        <li><strong>Power Consumption:</strong> 100–200W total for both fans at typical speeds</li>
+        <li><strong>Noise Level:</strong> &lt;40 dBA at 3 feet when properly installed</li>
+      </ul>
+
+      <div class="note">
+        <strong>Note:</strong> Counter-flow aluminum cores can achieve 80–90% effectiveness if you re-stack plates in counter-flow configuration, though this requires different manifolding.
+      </div>
+
+      <h3>Why Aluminum Outperforms Plastic</h3>
+      <table>
+        <thead>
+          <tr><th>Material Property</th><th>Aluminum</th><th>Polycarbonate</th><th>Advantage</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Thermal Conductivity</td><td>~200 W/m·K</td><td>~0.2 W/m·K</td><td>1000× better heat transfer</td></tr>
+          <tr><td>Wall Resistance</td><td>Negligible</td><td>Significant</td><td>Higher effectiveness</td></tr>
+          <tr><td>Durability</td><td>Excellent</td><td>Good</td><td>Longer service life</td></tr>
+          <tr><td>Cost per ft²</td><td>~$1.50</td><td>~$3.00</td><td>Lower material cost</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TROUBLESHOOTING -->
+    <h2>Troubleshooting Guide</h2>
+    <div class="panel">
+      <h3>Common Issues & Solutions</h3>
+      <table>
+        <thead>
+          <tr><th>Issue</th><th>Possible Cause</th><th>Solution</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Low effectiveness</td>
+            <td>Air bypass/leakage</td>
+            <td>Check edge sealing, reseal gaps with silicone</td>
+          </tr>
+          <tr>
+            <td>High pressure drop</td>
+            <td>Dirty filters or core</td>
+            <td>Replace filters, clean core surfaces</td>
+          </tr>
+          <tr>
+            <td>Condensate overflow</td>
+            <td>Blocked drain</td>
+            <td>Clear drain line, check pitch</td>
+          </tr>
+          <tr>
+            <td>Unbalanced flows</td>
+            <td>Different duct resistances</td>
+            <td>Adjust dampers or fan speeds independently</td>
+          </tr>
+          <tr>
+            <td>Frost formation</td>
+            <td>Very cold outdoor air</td>
+            <td>Implement defrost cycle or preheat</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FOOTER -->
+    <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--grid);">
+      <div class="note">
+        This DIY HRV design provides efficient heat recovery at a fraction of commercial unit costs. With proper construction and maintenance, expect 10+ years of reliable operation. Design can be scaled up or down by adjusting plate count and fan sizing.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
