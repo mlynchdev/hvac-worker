@@ -103,27 +103,27 @@
         <!-- Supply to Wood from MAU-WOOD -->
         <path d="M170 95 L220 95" stroke="#48c78e" stroke-width="4" class="duct-supply"/>
         <circle cx="195" cy="95" r="3" fill="#48c78e" />
-        <text x="190" y="85" class="label" text-anchor="end">OA ≈ 2,650–2,950 CFM</text>
+        <text x="190" y="85" class="label" text-anchor="end">OA ≈ 1,490–1,572 CFM</text>
 
         <!-- Wood general exhaust register to exterior fan? Wood process dust separate -->
         <path d="M260 70 L260 20 L170 20 L170 195" stroke="#347ac9" stroke-width="3" class="duct"/>
-        <text x="260" y="65" class="label">Gen. EXH ~820 CFM</text>
+        <text x="260" y="65" class="label">Gen. EXH ~655 CFM</text>
 
         <!-- Wood dust collection trunk to Cyclone DC -->
         <path d="M450 140 L450 395 L170 395" stroke="#e0a94b" stroke-width="6" class="duct-dust"/>
-        <text x="460" y="150" class="label">Wood DC Main ~2,100 CFM (3,500–4,000 fpm)</text>
+        <text x="460" y="150" class="label">Wood DC Main ~1,000 CFM (3,500–4,000 fpm)</text>
 
         <!-- Fab/CNC Exhaust branches to shared EF -->
         <path d="M170 195 L220 195 L220 220 L230 220" stroke="#347ac9" stroke-width="4" class="duct"/>
-        <text x="230" y="215" class="label">Fab Exhaust ~1,500 CFM</text>
+        <text x="230" y="215" class="label">Fab Exhaust ~1,360 CFM</text>
         <path d="M170 195 L220 195 L220 380 L230 380" stroke="#347ac9" stroke-width="4" class="duct"/>
-        <text x="230" y="375" class="label">CNC Exhaust ~1,170 CFM</text>
+        <text x="230" y="375" class="label">CNC Exhaust ~1,095 CFM</text>
 
         <!-- Fab/CNC OA branches from MAU-Fab/CNC -->
         <path d="M170 295 L210 295 L210 260 L230 260" stroke="#48c78e" stroke-width="4" class="duct-supply"/>
-        <text x="235" y="255" class="label">Fab OA ~1,350–1,425</text>
+        <text x="235" y="255" class="label">Fab OA ~1,224–1,292</text>
         <path d="M170 295 L210 295 L210 420 L230 420" stroke="#48c78e" stroke-width="4" class="duct-supply"/>
-        <text x="235" y="415" class="label">CNC OA ~1,050–1,110</text>
+        <text x="235" y="415" class="label">CNC OA ~986–1,040</text>
 
         <!-- Process devices/hoods (icons) -->
         <rect x="760" y="70" width="120" height="40" class="device"/><text x="820" y="95" class="label" text-anchor="middle">Planer/JP Drop</text>
@@ -173,7 +173,7 @@
             <tr><th>Process</th><th>Qty (active)</th><th>CFM each</th><th>Total CFM</th></tr>
           </thead>
           <tbody>
-            <tr><td>Wood Dust Collector</td><td class="right">1</td><td class="right">≈ 2,100</td><td class="right">≈ 2,100</td></tr>
+            <tr><td>Wood Dust Collector</td><td class="right">1</td><td class="right">≈ 1,000</td><td class="right">≈ 1,000</td></tr>
             <tr><td>Welding Extraction Arm</td><td class="right">1</td><td class="right">≈ 900</td><td class="right">≈ 900</td></tr>
             <tr><td>Grinding Hood</td><td class="right">(alt)</td><td class="right">≈ 600</td><td class="right">—</td></tr>
             <tr><td>CNC Mist Collector</td><td class="right">1</td><td class="right">≈ 500</td><td class="right">≈ 500</td></tr>
@@ -187,9 +187,9 @@
             <tr><th>Space</th><th>Baseline CFM</th><th>Process CFM</th><th>Design Exhaust</th><th>Supply OA (90–95%)</th></tr>
           </thead>
           <tbody>
-            <tr><td>Wood</td><td class="right">~820</td><td class="right">~2,100</td><td class="right"><b>~2,920</b></td><td class="right">~2,630–2,774</td></tr>
-            <tr><td>Fab</td><td class="right">~600</td><td class="right">~900</td><td class="right"><b>~1,500</b></td><td class="right">~1,350–1,425</td></tr>
-            <tr><td>CNC</td><td class="right">~670</td><td class="right">~500</td><td class="right"><b>~1,170</b></td><td class="right">~1,050–1,110</td></tr>
+            <tr><td>Wood</td><td class="right">~655</td><td class="right">~1,000</td><td class="right"><b>~1,655</b></td><td class="right">~1,490–1,572</td></tr>
+            <tr><td>Fab</td><td class="right">~460</td><td class="right">~900</td><td class="right"><b>~1,360</b></td><td class="right">~1,224–1,292</td></tr>
+            <tr><td>CNC</td><td class="right">~595</td><td class="right">~500</td><td class="right"><b>~1,095</b></td><td class="right">~986–1,040</td></tr>
           </tbody>
         </table>
         <div class="small">Adjust process CFM for simultaneous use diversity. If Fab runs arm + grinder concurrently, set Fab design exhaust closer to 2,000 CFM and scale OA accordingly.</div>
@@ -199,13 +199,13 @@
             <tr><th>Run</th><th>Design CFM</th><th>Velocity (fpm)</th><th>Suggested D (round)</th></tr>
           </thead>
           <tbody>
-            <tr><td>Fab Exhaust Branch</td><td class="right">1,500</td><td class="right">1,500</td><td class="right">≈ 14"</td></tr>
-            <tr><td>CNC Exhaust Branch</td><td class="right">1,170</td><td class="right">1,500</td><td class="right">≈ 12"</td></tr>
-            <tr><td>Combined Fab+CNC Manifold</td><td class="right">2,670</td><td class="right">1,500</td><td class="right">≈ 18"</td></tr>
-            <tr><td>Wood Dust Main (separate)</td><td class="right">2,100</td><td class="right">3,500–4,000</td><td class="right">≈ 10–12"</td></tr>
-            <tr><td>Wood OA Main</td><td class="right">2,700</td><td class="right">1,000</td><td class="right">≈ 22"</td></tr>
-            <tr><td>Fab OA Branch</td><td class="right">1,400</td><td class="right">900</td><td class="right">≈ 17"</td></tr>
-            <tr><td>CNC OA Branch</td><td class="right">1,100</td><td class="right">900</td><td class="right">≈ 15"</td></tr>
+            <tr><td>Fab Exhaust Branch</td><td class="right">1,360</td><td class="right">1,500</td><td class="right">≈ 13"</td></tr>
+            <tr><td>CNC Exhaust Branch</td><td class="right">1,095</td><td class="right">1,500</td><td class="right">≈ 12"</td></tr>
+            <tr><td>Combined Fab+CNC Manifold</td><td class="right">2,455</td><td class="right">1,500</td><td class="right">≈ 17"</td></tr>
+            <tr><td>Wood Dust Main (separate)</td><td class="right">1,000</td><td class="right">3,500–4,000</td><td class="right">≈ 7–8"</td></tr>
+            <tr><td>Wood OA Main</td><td class="right">1,550</td><td class="right">1,000</td><td class="right">≈ 17"</td></tr>
+            <tr><td>Fab OA Branch</td><td class="right">1,260</td><td class="right">900</td><td class="right">≈ 16"</td></tr>
+            <tr><td>CNC OA Branch</td><td class="right">1,013</td><td class="right">900</td><td class="right">≈ 14–15"</td></tr>
           </tbody>
         </table>
         <div class="small">Diameter (ft) ≈ √( 4 × CFM / (π × Velocity) ); convert to inches × 12. Final sizes depend on ESP, fittings, and acoustic constraints.</div>
